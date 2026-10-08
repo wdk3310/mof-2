@@ -59,7 +59,6 @@ while True:
 if Psi_1[N//2] < 0: Psi_1 = -Psi_1
 E1_final = E1_new * au_to_meV
 
-print("Wyznaczanie pierwszego stanu wzbudzonego (Psi_2)...")
 Psi_2 = np.random.uniform(-1, 1, N + 1)
 Psi_2[0] = Psi_2[N] = 0.0
 Psi_2 = Psi_2 / np.sqrt(np.sum(Psi_2**2) * dx)

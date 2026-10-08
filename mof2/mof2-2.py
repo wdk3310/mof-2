@@ -69,7 +69,7 @@ for mult in multipliers:
     iters_log, engs_log, total_iters, converged = test_convergence(mult)
     
     status = "Zbieznosc" if converged else "Rozbieznosc"
-    print(f"  -> Wynik: {status}. Ilosc iteracji: {total_iters}.")
+    print(f"  -> {mult} * alpha: {status}. Ilosc iteracji: {total_iters}.")
     
     label_text = f"$\\alpha = {mult}\\alpha_{{kryt}}$"
     plt.plot(iters_log, engs_log, label=label_text)
