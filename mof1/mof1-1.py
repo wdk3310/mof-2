@@ -4,41 +4,29 @@ import matplotlib.pyplot as plt
 N = 100
 V = 0
 L = 200 / 0.05292
-deltaX = L/N
-m = 0.067 
-E_max = 35 *10**-3
-#planck = 1
-#x_net = np.arrange(0, N + deltaX, deltaX)
-E_net = np.linspace(0, E_max, N)
-V = 0
+deltaX = L / N
+m = 0.067
+au_to_meV = 27211.4
 
-
-#psi_i+1
-def psi(i_in, Ei):
-    i = i_in - 1 
-    if i == 0:
-        return 0 
-    if i == 1:
-        return 1
-    
-    return -(2*m) * (Ei * V) * deltaX**2 * psi_table[i] - psi_table[i-2] + 2*psi_table[i]
-
-
-
+E_net_meV = np.linspace(0.1, 35, 1000)
 psi_N_dist = []
-for Ei in E_net:
-    psi_table = [0, 1]
-    for i in range(2, N+1):
-        psi_table.append(psi(i, Ei))
 
-    psi_N_dist.append(psi(101, Ei))
+for E_meV in E_net_meV:
+    E_au = E_meV / au_to_meV
     
-plt.plot(E_net, psi_N_dist)
-plt.show()
+    psi_table = np.zeros(N + 1)
+    psi_table[0] = 0
+    psi_table[1] = 1
+    
+    for i in range(1, N):
+        psi_table[i+1] = -(2 * m) * (E_au - V) * deltaX**2 * psi_table[i] - psi_table[i-1] + 2 * psi_table[i]
 
-'''
-def C():
-    psi_sum = 0
-    for i in range(N+1):
-        psi_sum += psi()
-'''
+    psi_N_dist.append(psi_table[N])
+
+plt.plot(E_net_meV, psi_N_dist, color='red', linestyle='-')
+plt.axhline(0, color='black', linestyle='--') 
+plt.ylim(-25, 25) 
+plt.xlabel("Energia E [meV]")
+plt.ylabel("Wartość Psi(L)")
+plt.grid(True)
+plt.show()
