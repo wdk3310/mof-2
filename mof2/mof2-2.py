@@ -77,8 +77,6 @@ for mult in multipliers:
 plt.title("Zbieznosc oczekiwanej energii")
 plt.xlabel("Liczba iteracji")
 plt.ylabel("Oczekiwana energia E [meV]")
-plt.ylim(0, 10) 
-plt.xlim(0, 20000)
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.legend(fontsize=11)
 plt.tight_layout()

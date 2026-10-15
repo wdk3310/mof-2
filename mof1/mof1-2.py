@@ -74,4 +74,4 @@ for i in range(1, len(energie_100) + 1):
     blad_100 = abs(energie_100[i-1] - E_dokladne_meV)
     blad_300 = abs(energie_300[i-1] - E_dokladne_meV)
     
-    print(f"Stan {i}: Błąd dla N=100: {blad_100:.6f} meV | Błąd dla N=300: {blad_300:.6f} meV")
+    print(f"Stan {i}: Blad dla N=100: {blad_100:.6f} meV | Błąd dla N=300: {blad_300:.6f} meV")

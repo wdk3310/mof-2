@@ -122,8 +122,8 @@ V_scaled = V / np.max(np.abs(V)) * np.max(Psi_1) * 0.5
 
 ax2.plot(x_axis_nm, Psi_1, label="Stan podstawowy $\\Psi_1$")
 ax2.plot(x_axis_nm, Psi_2, label="Stan wzbudzony $\\Psi_2$")
-ax2.plot(x_axis_nm, V_scaled, label="Potencjał $V(x)$", color='black', linestyle=':')
-ax2.set_title("Funkcje falowe potencjału Poschla-Tellera")
+ax2.plot(x_axis_nm, V_scaled, label="Potencjal $V(x)$", color='black', linestyle=':')
+ax2.set_title("Funkcje falowe potencjalu Poschla-Tellera")
 ax2.set_xlabel("Polozenie x [nm]")
 ax2.set_ylabel("Amplituda")
 ax2.legend()
