@@ -3,17 +3,17 @@ import matplotlib.pyplot as plt
 
 m = 0.067      
 ab = 0.05292    
-Eh = 27.2114      
-dt = 0.2          
-n_steps = 50000   
+Eh = 27211.4      
+dt = 1.0         
+n_steps = 10000 
 
 N = 201
 x_nm = np.linspace(-100, 100, N)
 x_au = x_nm / ab               
 dx_au = x_au[1] - x_au[0]
 
-F_Vnm = 0.75                     
-F_au = F_Vnm * ab / Eh             
+F_Vnm = 0.75                    
+F_au = F_Vnm * ab / Eh        
 V = F_au * x_au                   
 
 sigma_nm = 10
@@ -44,8 +44,11 @@ Psi1[0] = Psi1[-1] = 0.0
 Psi_prev = np.copy(Psi0)
 Psi_curr = np.copy(Psi1)
 
-plt.figure(figsize=(12, 6))
-plt.plot(x_nm, np.abs(Psi0)**2, label='t = 0', linestyle='--', color='black')
+density_map = []
+time_map = []
+
+density_map.append(np.abs(Psi0)**2)
+time_map.append(0.0)
 
 for step in range(2, n_steps + 1):
     H_Psi = apply_H(Psi_curr)
@@ -56,14 +59,16 @@ for step in range(2, n_steps + 1):
     Psi_prev = np.copy(Psi_curr)
     Psi_curr = np.copy(Psi_next)
 
-    if step % 5000 == 0:
-        plt.plot(x_nm, np.abs(Psi_curr)**2, label=f't = {step} dt')
+    if step % 100 == 0:
+        density_map.append(np.abs(Psi_curr)**2)
+        time_map.append(step * dt)
 
-plt.title(f'F = {F_Vnm} V/nm')
+plt.figure(figsize=(10, 6))
+plt.pcolormesh(x_nm, time_map, density_map, cmap='inferno', shading='auto')
+plt.colorbar(label='Gestosc prawdopodobienstwa $|\Psi(x, t)|^2$')
+plt.title(f'Ewolucja paczki falowej, F = {F_Vnm} meV/nm')
 plt.xlabel('Polozenie x [nm]')
-plt.ylabel('Gestosc prawdopodobienstwa $|\Psi(x, t)|^2$')
-plt.grid(True, linestyle=':')
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.ylabel('Czas t [j.at.]')
 plt.tight_layout()
 plt.show()
 
@@ -82,6 +87,9 @@ x_class_nm[0] = 0.0
 t_values_au[1] = dt
 x_avg_quant_nm[1] = calc_x_avg(Psi1) * ab
 x_class_nm[1] = (k_au/m * dt - F_au * dt**2 / (2*m)) * ab
+
+Psi_prev = np.copy(Psi0)
+Psi_curr = np.copy(Psi1)
 
 for step in range(2, n_steps + 1):
     H_Psi = apply_H(Psi_curr)
@@ -126,8 +134,11 @@ Psi1[0] = Psi1[-1] = 0.0
 Psi_prev = np.copy(Psi0)
 Psi_curr = np.copy(Psi1)
 
-plt.figure(figsize=(12, 6))
-plt.plot(x_nm, np.abs(Psi0)**2, label='t = 0', linestyle='--', color='black')
+density_map_0 = []
+time_map_0 = []
+
+density_map_0.append(np.abs(Psi0)**2)
+time_map_0.append(0.0)
 
 for step in range(2, n_steps + 1):
     H_Psi = apply_H(Psi_curr)
@@ -138,14 +149,16 @@ for step in range(2, n_steps + 1):
     Psi_prev = np.copy(Psi_curr)
     Psi_curr = np.copy(Psi_next)
 
-    if step % 5000 == 0:
-        plt.plot(x_nm, np.abs(Psi_curr)**2, label=f't = {step} dt')
+    if step % 100 == 0:
+        density_map_0.append(np.abs(Psi_curr)**2)
+        time_map_0.append(step * dt)
 
-plt.title(f'F = {F_Vnm} V/nm')
+plt.figure(figsize=(10, 6))
+plt.pcolormesh(x_nm, time_map_0, density_map_0, cmap='inferno', shading='auto')
+plt.colorbar(label='Gestosc prawdopodobienstwa $|\Psi(x, t)|^2$')
+plt.title(f'Ewolucja paczki falowej, F = {F_Vnm} meV/nm')
 plt.xlabel('Polozenie x [nm]')
-plt.ylabel('Gestosc prawdopodobienstwa $|\Psi(x, t)|^2$')
-plt.grid(True, linestyle=':')
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.ylabel('Czas t [j.at.]')
 plt.tight_layout()
 plt.show()
 
